@@ -60,7 +60,7 @@ public class Guardar {
             for(IndiceCanciones indice: IndiceRegistros){
                 archivo.writeInt((int) indice.getPosicion());
                 archivo.writeByte(indice.getNombreC().length());
-                archivo.writeChars(indice.getNombreC());
+                archivo.writeBytes(indice.getNombreC());
             }
             
             archivo.seek(0);
