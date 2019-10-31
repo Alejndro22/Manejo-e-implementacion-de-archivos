@@ -31,6 +31,8 @@ public class Guardar {
     public void agregarCancion(Cancion cancion, String nombreC){
         this.ListaRegistros.add(cancion);
         this.IndiceRegistros.add(new IndiceCanciones(nombreC,0));
+        System.out.println(ListaRegistros);
+        System.out.println(IndiceRegistros);
     }
     
     public void guardar(){
@@ -52,7 +54,8 @@ public class Guardar {
                 archivo.writeBytes(cancion.getArtista());
                 
                 archivo.write(cancion.getAlbum().length());
-                archivo.writeBytes(cancion.getAlbum());                
+                archivo.writeBytes(cancion.getAlbum());     
+            
             }
 
             punteroAIndice = (int)archivo.getFilePointer();
@@ -67,6 +70,7 @@ public class Guardar {
             archivo.writeInt(punteroAIndice);
             
             archivo.close();
+            
             
         } catch (IOException ex) {
             Logger.getLogger(Guardar.class.getName()).log(Level.SEVERE, null, ex);

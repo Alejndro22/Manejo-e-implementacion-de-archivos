@@ -10,7 +10,7 @@ import java.io.RandomAccessFile;
  * @author Douglas
  */
 public class BuscarArchivos {   
-    
+    Guardar almacenDeRegistros = new Guardar("biblioteca.data");
     Cancion r = new Cancion();
     
     public String tag(String tag){
@@ -81,7 +81,7 @@ public class BuscarArchivos {
     }
         
     public void listarFicherosPorCarpeta(final File carpeta) throws FileNotFoundException, IOException  {
-        Guardar almacenDeRegistros = new Guardar("agenda.data");
+        
         for(final File ficheroEntrada : carpeta.listFiles()) {
             if (ficheroEntrada.isDirectory()) {
                 listarFicherosPorCarpeta(ficheroEntrada);
@@ -131,14 +131,16 @@ public class BuscarArchivos {
                             }
                             pos=(short) (pos+10+tagSize);
                         }
+//                        System.out.println(r.getAlbum()+r.getArtista()+r.getAño()+r.getBiografia()+r.getDireccionC()+r.getDisquera());
                         
-                        archivo.close();
                         System.out.println("FINNNNNNNNNNNNN");
-                        
+                        System.out.println(r.getAlbum()+r.getArtista()+r.getAño()+r.getBiografia()+r.getDireccionC()+r.getDisquera());
+                        almacenDeRegistros.agregarCancion(r, r.getNombreC());  
+                        System.out.println(r.getAlbum()+r.getArtista()+r.getAño()+r.getBiografia()+r.getDireccionC()+r.getDisquera());
                     }
-                 almacenDeRegistros.agregarCancion(r, r.getNombreC());
             }
         }
         almacenDeRegistros.guardar();
     }
+    
 }
