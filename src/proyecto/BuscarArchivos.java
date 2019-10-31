@@ -1,4 +1,3 @@
-
 package proyecto;
 
 import java.io.File;
@@ -6,20 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-
-public class BuscarArchivos {
-    public boolean readFolderFiles(String folder) {
-        boolean resultado;
-        File folderFile = new File(folder);
-        if ((resultado = folderFile.exists())) {
-            File[] files = folderFile.listFiles();
-            for (File file : files) {
-                boolean isFolder = file.isDirectory();
-                System.out.println(file.getName());
-            }
-        }
-        return resultado;
-    }
+/**
+ *
+ * @author Douglas
+ */
+public class BuscarArchivos {   
+    
+    Cancion r = new Cancion();
     
     public String tag(String tag){
         if ("TALB".equals(tag)){
@@ -46,21 +38,58 @@ public class BuscarArchivos {
         else if ("TYER".equals(tag)){
             return "Año del álbum: ";
         }
-        else if ("TRCK".equals(tag)){
-            return "Etiqueta del track: ";
+        else{
+            return null;
+        }     
+    }
+    public String AssignFromTag(String tag, String data){
+        if ("TALB".equals(tag)){
+            r.setAlbum(data);
+            return "Álbum: ";
+        }
+        else if ("TIT2".equals(tag)){
+            r.setNombreC(data);
+            return "Nombre de la canción: ";
+        }
+        else if ("TPE1".equals(tag)){
+            r.setArtista(data);
+            return "Artista: ";
+        }
+        else if ("TPE2".equals(tag)){
+            r.setArtista(data);
+            return "Grupo: ";
+        }
+        else if ("TCON".equals(tag)){
+            r.setGenero(data);
+            return "Genero: ";
+        }
+        else if ("COMM".equals(tag)){
+            r.setBiografia(data);
+            return "Comentario: ";
+        }
+        else if ("TDRC".equals(tag)){
+            r.setAño(data);
+            return "Fecha de lanzamiento: ";
+        }
+        else if ("TYER".equals(tag)){
+            r.setAño(data);
+            return "Año del álbum: ";
         }
         else{
             return null;
         }     
     }
-    
+        
     public void listarFicherosPorCarpeta(final File carpeta) throws FileNotFoundException, IOException  {
+        Guardar almacenDeRegistros = new Guardar("agenda.data");
         for(final File ficheroEntrada : carpeta.listFiles()) {
             if (ficheroEntrada.isDirectory()) {
                 listarFicherosPorCarpeta(ficheroEntrada);
             } else {
                  if (ficheroEntrada.getName().endsWith(".mp3") || ficheroEntrada.getName().endsWith(".MP3"))
                     {
+                        System.out.println(ficheroEntrada);
+                        r = new Cancion();
                         short pos=3; int totalTS;
                         RandomAccessFile archivo = new RandomAccessFile(ficheroEntrada, "r");
                         archivo.seek(pos);
@@ -97,14 +126,19 @@ public class BuscarArchivos {
                                 byte[] info = new byte[tagSize];
                                 archivo.read(info);
                                 String cadena = new String(info);
+                                AssignFromTag(tagg, cadena);
                                 System.out.println(cadena);
                             }
                             pos=(short) (pos+10+tagSize);
                         }
+                        
                         archivo.close();
                         System.out.println("FINNNNNNNNNNNNN");
+                        
                     }
+                 almacenDeRegistros.agregarCancion(r, r.getNombreC());
             }
         }
+        almacenDeRegistros.guardar();
     }
 }
