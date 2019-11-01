@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  * @author Douglas
  */
 public class Guardar {
+    //Para esta clase se utilizaron conceptos aprendidos en clase, con una base en un ejercicio realizado.
+    //Se crean los elementos necesarios como vistos en clase.    
     private String nombreDeArchivo;
     
     private ArrayList<Cancion> ListaRegistros;
@@ -29,25 +31,26 @@ public class Guardar {
         
         
     }
-    
+    //Se utiliza para obtener el arreglo desde otras clases.
     public ArrayList getCanciones(){
        ListaRegistros = new ArrayList<Cancion>();
        return ListaRegistros;
     }
-    
+    //Se utiliza para obtener el arreglo desde otras clases.
     public ArrayList getIndCan(){
        IndiceRegistros = new ArrayList<IndiceCanciones>();
        return IndiceRegistros;
     }
     
-
+    //Añade la canción a la lista y también al indice.
     public void agregarCancion(Cancion cancion, String nombreC){
         this.ListaRegistros.add(cancion);
         this.IndiceRegistros.add(new IndiceCanciones(nombreC,0));
-        System.out.println(ListaRegistros);
-        System.out.println(IndiceRegistros);
     }
     
+    //Primero escribe la posición del índice.
+    //Comienza a escribir el archivo, escribiendo primero la longitud de cada cadena y luego escribiendo la misma.
+    //De igual manera se escribe el índice.
     public void guardar(){
         try {            
             RandomAccessFile archivo = new RandomAccessFile(nombreDeArchivo,"rw");
@@ -68,6 +71,27 @@ public class Guardar {
                 
                 archivo.write(cancion.getAlbum().length());
                 archivo.writeBytes(cancion.getAlbum());     
+                
+                archivo.write(cancion.getAño().length());
+                archivo.writeBytes(cancion.getAño());   
+                
+                archivo.write(cancion.getNombreC().length());
+                archivo.writeBytes(cancion.getNombreC());   
+                
+                archivo.write(cancion.getGenero().length());
+                archivo.writeBytes(cancion.getGenero());   
+                
+                archivo.write(cancion.getDireccionC().length());
+                archivo.writeBytes(cancion.getDireccionC());   
+                
+                archivo.write(cancion.getUrlAutor().length());
+                archivo.writeBytes(cancion.getUrlAutor());   
+                
+                archivo.write(cancion.getUrlDisquera().length());
+                archivo.writeBytes(cancion.getUrlDisquera());   
+                
+                archivo.write(cancion.getBiografia().length());
+                archivo.writeBytes(cancion.getBiografia());   
             
             }
 
@@ -87,6 +111,24 @@ public class Guardar {
             
         } catch (IOException ex) {
             Logger.getLogger(Guardar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //Parte del editar que cambia los valores en el array.
+    public void Editar(String nombre, String Disquera, String Autor, String Album, String Año, String Genero, String DireccionC, String URLAutor, String URLDisquera, String Biografia){
+        for (int i=0; i<ListaRegistros.size(); i++){
+            if(nombre == null ? ListaRegistros.get(i).getNombreC() == null : nombre.equals(ListaRegistros.get(i).getNombreC())){
+                ListaRegistros.get(i).setAlbum(Album);
+                ListaRegistros.get(i).setArtista(Autor);
+                ListaRegistros.get(i).setDisquera(Disquera);
+                ListaRegistros.get(i).setAño(Año);
+                ListaRegistros.get(i).setGenero(Genero);
+                ListaRegistros.get(i).setDireccionC(DireccionC);
+                ListaRegistros.get(i).setUrlAutor(URLAutor);
+                ListaRegistros.get(i).setUrlDisquera(URLDisquera);
+                ListaRegistros.get(i).setBiografia(Biografia);
+            }
+            
         }
     }
     
