@@ -21,12 +21,25 @@ public class Guardar {
     private ArrayList<Cancion> ListaRegistros;
     
     private ArrayList<IndiceCanciones> IndiceRegistros;
-
+    
     public Guardar(String nombreDeArchivo) {
         this.nombreDeArchivo = nombreDeArchivo;
         this.ListaRegistros = new ArrayList<>();
         this.IndiceRegistros = new ArrayList<>();
+        
+        
     }
+    
+    public ArrayList getCanciones(){
+       ListaRegistros = new ArrayList<Cancion>();
+       return ListaRegistros;
+    }
+    
+    public ArrayList getIndCan(){
+       IndiceRegistros = new ArrayList<IndiceCanciones>();
+       return IndiceRegistros;
+    }
+    
 
     public void agregarCancion(Cancion cancion, String nombreC){
         this.ListaRegistros.add(cancion);

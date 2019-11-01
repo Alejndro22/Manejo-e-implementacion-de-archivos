@@ -1,17 +1,47 @@
 package proyecto;
 
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 /**
  *
  * @author Douglas
  */
 public class BuscarArchivos {   
-    Guardar almacenDeRegistros = new Guardar("biblioteca.data");
+    Guardar almacenDeRegistros;
+    File archivo;
+    FileInputStream archivoRead;
+    
     Cancion r = new Cancion();
+
+    public BuscarArchivos() throws FileNotFoundException, IOException {
+       String a="";
+        this.archivo = new File("biblioteca.data");
+        if(!archivo.exists()){
+            almacenDeRegistros = new Guardar("biblioteca.data");
+            
+        }
+        else{
+            a=System.getProperty("user.dir");
+            this.archivoRead = new FileInputStream(a+"\\biblioteca.data");
+            archivoRead.close();
+            archivo.delete();
+            almacenDeRegistros = new Guardar("biblioteca.data");
+        }
+    }
+    
+    public ArrayList getListaCanciones(){
+        ArrayList<Cancion> canciones = almacenDeRegistros.getListaRegistros();
+        return canciones;
+    }
+    
+    
+    
     
     public String tag(String tag){
         if ("TALB".equals(tag)){
@@ -88,8 +118,10 @@ public class BuscarArchivos {
             } else {
                  if (ficheroEntrada.getName().endsWith(".mp3") || ficheroEntrada.getName().endsWith(".MP3"))
                     {
-                        System.out.println(ficheroEntrada);
+                        
                         r = new Cancion();
+                        String pathh = ficheroEntrada.getAbsolutePath();
+                        r.setDireccionC(pathh);
                         short pos=3; int totalTS;
                         RandomAccessFile archivo = new RandomAccessFile(ficheroEntrada, "r");
                         archivo.seek(pos);
