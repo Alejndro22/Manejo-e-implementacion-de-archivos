@@ -22,13 +22,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Douglas
  */
 public class AgregarRuta extends javax.swing.JInternalFrame  {
+    //Se inicializa la jList
     DefaultListModel listModel;
     ArrayList<Cancion> nueva;
     public AgregarRuta() throws IOException {
         initComponents();
         listModel = new DefaultListModel();
         jList1.setModel(listModel);
-        
+        //Se abre la ventana emergente y se almacena la direccion de la carpeta que elige.
+        //Se restringe para que se muestren directorios unicamente.
         String fullPath=new String();
         Scanner entrada = null;
         JFileChooser chooser = new JFileChooser();    
@@ -47,6 +49,8 @@ public class AgregarRuta extends javax.swing.JInternalFrame  {
         File folder = new File(fullPath);
         prueba.listarFicherosPorCarpeta(folder);
         nueva = prueba.getListaCanciones();
+        //Habiendo traido la lista desde la clase guardar, se los datos obtenidos en la
+        //jlist para mostrar los archivos añadidos.
         for(int i=0; i<nueva.size(); i++){
             listModel.add(i, nueva.get(i).getNombreC());
         }
@@ -226,6 +230,8 @@ public class AgregarRuta extends javax.swing.JInternalFrame  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        //Se selecciona un nombre en la lista y ese se compara con los valores de nombre ingresados
+        //En el array para poder así hallar los datos que le correspeden 
         String selected = jList1.getSelectedValue();
         for(int i = 0; i<nueva.size(); i++){
             if (nueva.get(i).getNombreC() == null ? selected == null : nueva.get(i).getNombreC().equals(selected)){

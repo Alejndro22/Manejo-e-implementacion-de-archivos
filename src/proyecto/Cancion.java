@@ -9,6 +9,8 @@ package proyecto;
  *
  * @author Douglas
  */
+
+//Se declaran todos los atributos necesarios para el archivo.
 public class Cancion {
     private String disquera;
     private String artista;
@@ -35,7 +37,7 @@ public class Cancion {
         this.urlDisquera =  new String();
         this.biografia =  new String();
     }
-
+    //Constructor.
     public Cancion(String disquera, String artista, String album, String año, String nombreC, String genero, String direccionC, String duracion, String urlAutor, String urlDisquera, String biografia) {
         this.disquera = disquera;
         this.artista = artista;
